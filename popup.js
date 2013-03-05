@@ -21,6 +21,8 @@ chrome.tabs.getSelected(null, function (tab) {
 		var appinfo = bg.appinfo;
 		var count = 0;
 
+		var table = document.getElementById('app-table');
+
 		for (var appid in apps) {
 			app = appinfo[appid] ? appinfo[appid] : {};
 
@@ -33,7 +35,10 @@ chrome.tabs.getSelected(null, function (tab) {
 				app.title = appid + ' ' + apps[appid];
 			}
 
-			// use DOM to avoid error
+			var tr = document.createElement('tr');
+
+			// Create the icon:
+			var tdIcon = document.createElement('td');
 			var link = document.createElement('a');
 			var icon = document.createElement('img');
 
@@ -47,14 +52,20 @@ chrome.tabs.getSelected(null, function (tab) {
 			icon.src = "apps/" + app.icon;
 
 			link.appendChild(icon);
-			display.appendChild(link);
+			tdIcon.appendChild(link);
+
+			// Attach the App Name / info
+			var tdName = document.createElement('td');
+			tdName.textContent = app.title;
+
+			// put it all together:
+			tr.appendChild(tdIcon);
+			tr.appendChild(tdName);
+			table.appendChild(tr);
 
 			count++;
 		}
 
-		if (count < 8) // correct the width for better view
-			display.style.width = (count*20) + "px";
-		else
-			display.style.width = "160px";
+
 	});
 });
