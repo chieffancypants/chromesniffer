@@ -10,9 +10,13 @@
  */
 
 (function () {
+
+
 	var _apps = {};
 	var doc = document.documentElement;
 	var name;
+
+	var start = +new Date();  // log start timestamp
 
 	// 1: detect by meta tags, the first matching group will be version
 	var metas = doc.getElementsByTagName("meta");
@@ -83,6 +87,8 @@
 		}
 	}
 
+	console.log('megas', (+new Date()) - start);
+
 	// 2: detect by script tags
 	var scripts = doc.getElementsByTagName("script");
 
@@ -133,7 +139,7 @@
 				_apps[t] = -1;
 		}
 	}
-
+	console.log('scripts', (+new Date()) - start);
 	// 3: detect by domains
 
 	// 4: detect by regexp
@@ -171,6 +177,7 @@
 		if (text_tests[t].test(text))
 			_apps[t] = -1;
 	}
+	console.log('regexp', (+new Date()) - start);
 
 	// TODO: merge inline detector with version detector
 
@@ -342,6 +349,8 @@
 			_apps[t] = -1;
 	}
 
+	console.log('jstests', (+new Date()) - start);
+
 	// 6: detect some script version when available
 	var js_versions = {
 		'Prototype': function() {
@@ -437,6 +446,7 @@
 			_apps[a] = r?r:-1
 		}
 	}
+	console.log('versions', (+new Date()) - start);
 
 	// 7: detect by header
 	// @todo
@@ -483,6 +493,8 @@
 		else
 			break;
 	}
+
+	console.log('css', (+new Date()) - start);
 
 	// convert to array
 	var jsonString = JSON.stringify(_apps);
