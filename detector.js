@@ -94,7 +94,6 @@
 		'Ubercart': /uc_cart/i,
 		'Closure': /\/goog\/base\.js/i,
 		'MODx': /\/min\/b=.*f=.*/,
-		'MooTools': /mootools/i,
 		'Dojo': /dojo(\.xd)?\.js/i,
 		'script.aculo.us': /scriptaculous\.js/i,
 		'Disqus': /disqus.com\/forums/i,
@@ -332,6 +331,9 @@
 		},
 		'Sammy.js': function() {
 			return window.Sammy != null;
+		},
+		'MooTools': function() {
+			return window.MooTools != null;
 		}
 	};
 
