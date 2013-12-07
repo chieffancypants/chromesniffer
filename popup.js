@@ -9,63 +9,68 @@
  *
  */
 
-var bg = chrome.extension.getBackgroundPage();
+angular.module('chromesniffer', [])
+	.config(function ($compileProvider) {
+		$compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|file|chrome-extension):|data:image/);
+		$compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|tel|file|chrome-extension):/);
+	})
 
-chrome.tabs.getSelected(null, function (tab) {
-	// Request the applications from the background page:
-	chrome.extension.sendMessage({msg: "get", tab: tab.id}, function (response) {
-		console.log(response);
-		var display = document.getElementById('app_list');
-		var apps = response.apps;
-		var html = '';
-		var appinfo = bg.appinfo;
-		var count = 0;
+	.controller('popup', function($scope) {
+		$scope.assface = 'hi';
+		getApps(function(err, apps) {
+			$scope.apps = apps;
+			$scope.$apply();
+		});
+	})
 
-		var table = document.getElementById('app-table');
+	.filter('categoryName', function() {
+		return function(name) {
+			switch (name) {
+				case 'cms':
+					return 'CMS';
+					break;
+				case 'framework':
+					return 'Frameworks';
+					break;
+				case 'ecommerce':
+					return 'E-Commerce';
+					break;
+				default:
+					return name.charAt(0).toUpperCase() + name.slice(1);
+					break;
+			}
+		}
+	});
 
-		for (var appid in apps) {
-			app = appinfo[appid] ? appinfo[appid] : {};
 
-			// i'm lazy to fill all kind of the information :(
-			if (!app.title) app.title = appid;
-			if (!app.url) app.url = appinfo[''].url.replace('%s',appid); // it's google one
-			if (!app.icon) app.icon = appinfo[''].icon;
 
-			if (apps[appid] != "-1") {
-				app.title = appid + ' ' + apps[appid];
+
+function getApps(cb) {
+	var bg = chrome.extension.getBackgroundPage();
+	var categories = {};
+	chrome.tabs.getSelected(null, function (tab) {
+		// Request the applications from the background page:
+		chrome.extension.sendMessage({msg: "get", tab: tab.id}, function (response) {
+			var display = document.getElementById('app_list');
+			var apps = response.apps;
+			var html = '';
+			var appinfo = bg.appinfo;
+			var count = 0;
+
+			// categorize the apps:
+			for (var appName in apps) {
+				app = appinfo[appName] ? appinfo[appName] : {};
+				app.title = app.title || appName;
+				app.categories.forEach(function(category) {
+					categories[category] = categories[category] || [];
+					categories[category].push(app);
+				});
 			}
 
-			var tr = document.createElement('tr');
+			cb(null, categories);
 
-			// Create the icon:
-			var tdIcon = document.createElement('td');
-			var link = document.createElement('a');
-			var icon = document.createElement('img');
-
-			link.target = "_blank";
-			link.title = app.title;
-			link.href = app.url;
-
-			icon.alt = app.title;
-			icon.width = 16;
-			icon.height = 16;
-			icon.src = "apps/" + app.icon;
-
-			link.appendChild(icon);
-			tdIcon.appendChild(link);
-
-			// Attach the App Name / info
-			var tdName = document.createElement('td');
-			tdName.textContent = app.title;
-
-			// put it all together:
-			tr.appendChild(tdIcon);
-			tr.appendChild(tdName);
-			table.appendChild(tr);
-
-			count++;
-		}
-
-
+		});
 	});
-});
+}
+
+

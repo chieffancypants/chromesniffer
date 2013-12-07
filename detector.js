@@ -36,7 +36,6 @@
 			'DotNetNuke': /DotNetNuke/i,
 			'Sitefinity': /Sitefinity\s+(.*)/i,
 			'WebGUI': /WebGUI/i,
-			'ez Publish': /eZ\s*Publish/i,
 			'BIGACE': /BIGACE/i,
 			'TypePad': /typepad\.com/i,
 			'Blogger': /blogger/i,
@@ -47,7 +46,6 @@
 			'WPML': /WPML/i,
 			'PivotX': /PivotX/i,
 			'OpenACS': /OpenACS/i,
-			'AlphaCMS': /alphacms\s+(.*)/i,
 			'concrete5': /concrete5 -\s*(.*)$/,
 			'Webnode': /Webnode/,
 			'GetSimple': /GetSimple/,
@@ -102,7 +100,6 @@
 		'reCaptcha': /(google\.com\/recaptcha|api\.recaptcha\.net\/)/i,
 		'Mollom': /mollom\/mollom\.js/i, // only work on Drupal now
 		'ZenPhoto': /zp-core\/js/i,
-		'Gallery2': /main\.php\?.*g2_.*/i,
 		'AdSense': /pagead\/show_ads\.js/,
 		'XenForo': /js\/xenforo\//i,
 		'Cappuccino': /Frameworks\/Objective-J\/Objective-J\.js/,
@@ -183,9 +180,6 @@
 		},
 		'Drupal': function() {
 			return window.Drupal != null;
-		},
-		'TomatoCMS': function() {
-			return window.Tomato != null;
 		},
 		'MojoMotor': function() {
 			return window.Mojo != null;

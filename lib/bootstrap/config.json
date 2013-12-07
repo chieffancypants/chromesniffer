@@ -1,0 +1,27 @@
+{
+  "vars": {},
+  "css": [
+    "print.less",
+    "type.less",
+    "code.less",
+    "tables.less",
+    "forms.less",
+    "buttons.less",
+    "glyphicons.less",
+    "button-groups.less",
+    "input-groups.less",
+    "labels.less",
+    "badges.less",
+    "thumbnails.less",
+    "media.less",
+    "panels.less",
+    "close.less",
+    "utilities.less",
+    "responsive-utilities.less",
+    "component-animations.less"
+  ],
+  "js": [
+    "collapse.js",
+    "transition.js"
+  ]
+}

@@ -1,50 +1,86 @@
 <!--
-	Chrome AppSniffer by Chieffancypants (forked from Bao Nguyen)
+  Chrome AppSniffer by Chieffancypants (forked from Bao Nguyen)
 
-	Author  : https://github.com/chieffancypants
-	Project : https://github.com/chieffancypants/chromesniffer
-	Issues  : https://github.com/chieffancypants/chromesniffer/issues
-	License : GPLv3
+  Author  : https://github.com/chieffancypants
+  Project : https://github.com/chieffancypants/chromesniffer
+  Issues  : https://github.com/chieffancypants/chromesniffer/issues
+  License : GPLv3
 -->
-<style type="text/css">
-	body, table {
-		font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-		font-size: 13px;
-		color: #666;
-	}
 
-	table {
-		width: 200px;
-		border-collapse: separate;
-		border-spacing: 0px;
-		border-color: gray;
-		font-weight: bold;
-	}
+<html ng-app="chromesniffer" ng-csp>
+<head>
+  <link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap.css">
+  <style type="text/css">
+    ul.list-unstyled {
+      padding: 5px;
+      margin: 0;
+    }
+    .thumbnail {
+      display: inline-block;
+      margin: 5px;
+    }
+    .app-title {
+      font-size: 16px;
+    }
+    .app a {
+      position: relative;
+      top: 2px;
+    }
+  </style>
+</head>
+<body ng-controller="popup">
+  <div id="container" style="width:500px; margin: 15px">
+    <div class="title">{{ apps.length }} ChromeSniffer Apps Found:</div>
+    <form class="form-group">
+      <input id="filter-input"
+        type="search"
+        class="form-control"
+        placeholder="Search for an app below..."
+        ng-model="q"
+      />
+    </form>
 
-	table td {
-		padding: 8px;
-		line-height: 20px;
-		text-align: left;
-		vertical-align: top;
-		border-top: 1px solid #dddddd;
-	}
-	
-	table tr:first-child td {
-		border:none;
-	}
-	
-	table tr:hover {
-		background-color: #f5f5f5;
-		color: #333;
-	}
+      <div class="panel-group" id="accordion">
+        <div class="panel panel-default"
+          ng-repeat="(category,apps) in apps | filter:q">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              <a data-toggle="collapse"
+                data-parent="#accordion"
+                ng-href="#collapse-{{$index}}"
+                ng-bind="category | categoryName">
+              </a>
+            </h4>
+          </div>
+          <div id="collapse-{{$index}}"
+            class="panel-collapse collapse"
+            ng-class="{in:$first}">
+            <ul class="panel-body list-unstyled">
+              <li class="app" ng-repeat="app in apps">
+                <img class="thumbnail" ng-src="apps/{{app.icon}}"/>
+                <a class="app-title"
+                  target="_blank"
+                  ng-href="{{ app.url }}"
+                  ng-bind="app.title">
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
 
-	#app_list a {
-		margin-right: 4px;
-	}
-</style>
+      </div>
 
-<script type="text/javascript" src="common.js"></script>
-<script language="javascript" src="popup.js"></script>
 
-<table id="app-table"></table>
+  </div>
+
+  <script type="text/javascript" src="lib/jquery-2.0.3.min.js"></script>
+  <script type="text/javascript" src="lib/angular.min.js"></script>
+  <script type="text/javascript" src="lib/bootstrap/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="common.js"></script>
+  <script type="text/javascript" src="popup.js"></script>
+</body>
+</html>
+
+
+
 
