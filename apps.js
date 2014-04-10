@@ -800,9 +800,38 @@ var appinfo = {
 	},
 
 
+
+	// ==== video ====
+	'KZO': {
+		icon: 'kzo.ico',
+		url: 'http://kzoinnovations.com',
+		categories: ['video']
+	},
+	'Ooyala': {
+		icon: 'ooyala.ico',
+		url: 'http://www.ooyala.com',
+		categories: ['video']
+	},
+	'Brightcove': {
+		icon: 'brightcove.ico',
+		url: 'http://www.brightcove.com',
+		categories: ['video']
+	},
+	'Vimeo': {
+		icon: 'vimeo.ico',
+		url: 'http://vimeo.com',
+		categories: ['video']
+	},
+	'YouTube': {
+		icon: 'youtube.ico',
+		url: 'http://www.youtube.com',
+		categories: ['video']
+	},
+
+
 	// ==== misc ====
 	'': { // default
 		icon: 'unknown.jpg',
 		url: 'http://google.com/search?q=%s'
-	}, 
+	},
 };

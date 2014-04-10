@@ -158,7 +158,10 @@
 		'osCommerce': /(product_info\.php\?products_id|_eof \/\/-->)/,
 		'OpenCart': /index.php\?route=product\/product/,
 		'Shibboleth': /<form action="\/idp\/Authn\/UserPassword" method="post">/,
-		'New Relic': /beacon-?\d*\.newrelic\.com/
+		'New Relic': /beacon-?\d*\.newrelic\.com/,
+		'Vimeo': /<iframe .*src="https?:\/\/player\.vimeo\.com/,
+		'YouTube': /<iframe .*src=[^>].*www\.youtube\.com/,
+		'Ooyala': /<object [^>].*player\.ooyala\.com/
 	};
 
 	for (var t in text_tests) {
@@ -328,6 +331,9 @@
 		},
 		'MooTools': function() {
 			return window.MooTools != null;
+		},
+		'Brightcove': function() {
+			return (window.brightcove || window.brightcoveJS) != null;
 		}
 	};
 
